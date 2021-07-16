@@ -1,8 +1,9 @@
 import {Component, OnDestroy} from '@angular/core';
 import { EmailService } from "./services/email.service";
 import { Subject } from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {FormControl, FormGroup, Validators } from "@angular/forms";
+import { takeUntil } from "rxjs/operators";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -22,22 +23,24 @@ export class AppComponent implements OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>()
 
-  constructor(private emailService: EmailService) {
+  constructor(private emailService: EmailService, private snackBar: MatSnackBar) {
   }
 
   sendEmail() {
     this.emailService.sendEmail()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        console.log('test');
+      .subscribe((result) => {
+        this.snackBar.open('Email sent!');
+        console.log(result);
       }, error => {
+        this.snackBar.open(`Error: ${error}`);
         console.log(error);
       })
   }
 
   onSubmit() {
-    console.log(this.emailForm.controls["email"]?.value);
-    console.log(this.emailForm.controls["emailBody"]?.value);
+    console.log(this.emailForm.controls['email']?.value);
+    console.log(this.emailForm.controls['emailBody']?.value);
   }
 
   ngOnDestroy(): void {
