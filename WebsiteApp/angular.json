@@ -75,7 +75,11 @@
               "browserTarget": "WebsiteApp:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+		  "options": {
+			  "host": "localhost",
+			  "port": 4200
+		  }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
