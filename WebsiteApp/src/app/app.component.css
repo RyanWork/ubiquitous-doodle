@@ -1,11 +1,11 @@
 .name-header {
-  font-size: 6em;
+  font-size: 5em;
   font-family: "Lucida Bright", serif;
 }
 
 .content {
   display: flex;
-  margin: 82px auto 32px;
+  margin: 32px auto 32px;
   padding: 16px;
   max-width: 1000px;
   flex-direction: column;
