@@ -11,6 +11,6 @@ export class EmailService {
   }
 
   public sendEmail(email: Email) {
-    return this.httpClient.post("http://localhost:5000/api/v1/Email", email)
+    return this.httpClient.post("https://localhost:5001/api/v1/Email", email)
   }
 }

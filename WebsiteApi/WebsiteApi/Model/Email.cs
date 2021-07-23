@@ -2,14 +2,8 @@
 {
     public record Email
     {
-        public Email(string emailAddress, string emailBody)
-        {
-            EmailAddress = emailAddress;
-            EmailBody = emailBody;
-        }
-
-        public string EmailAddress { get; }
+        public string? EmailAddress { get; set; } = string.Empty;
         
-        public string EmailBody { get; }
+        public string? EmailBody { get; set; } = string.Empty;
     }
 }
