@@ -14,7 +14,7 @@ namespace WebsiteApi.Common.ServiceAccountFactory
 
         private readonly IDictionary<string, GmailService> _gmailServiceCache = new Dictionary<string, GmailService>();
         
-        public async Task<GmailService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken)
+        public async Task<IClientService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken)
         {
             await _cacheLock.WaitAsync(cancellationToken);
             try

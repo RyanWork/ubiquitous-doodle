@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,8 +31,6 @@ namespace WebsiteApi.Controllers
 
         private readonly IServiceAccountFactory _serviceAccountFactory;
         
-        private GmailService? _gmailService;
-        
         public EmailController(IOptions<AppSettings> appSettings, IServiceAccountFactory serviceAccountFactory)
         {
             _appSettings = appSettings.Value;
@@ -51,8 +50,10 @@ namespace WebsiteApi.Controllers
         {
             if (!ValidatePostedEmail(email))
                 return new BadRequestResult();
-
-            _gmailService ??= await _serviceAccountFactory.CreateGmailServiceAsync(_appSettings.KeyFilePath, ApplicationName, _appSettings.ImpersonationUser, Scopes, cancellationToken);
+            
+            IClientService? clientService = await _serviceAccountFactory.CreateGmailServiceAsync(_appSettings.KeyFilePath, ApplicationName, _appSettings.ImpersonationUser, Scopes, cancellationToken);
+            if (clientService is not GmailService gmailService)
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
 
             var mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_appSettings.ServiceAccountEmail);
@@ -65,7 +66,7 @@ namespace WebsiteApi.Controllers
             await using (var ms = new MemoryStream())
             {
                 await mimeMessage.WriteToAsync(ms, cancellationToken);
-                var sendRequest = _gmailService.Users.Messages.Send(new Message
+                var sendRequest = gmailService.Users.Messages.Send(new Message
                 {
                     Raw = Convert.ToBase64String(ms.ToArray())
                 }, "me");
