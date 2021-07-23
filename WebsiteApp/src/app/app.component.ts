@@ -27,7 +27,10 @@ export class AppComponent implements OnDestroy {
   }
 
   sendEmail() {
-    this.emailService.sendEmail()
+    this.emailService.sendEmail({
+      emailAddress: this.emailForm.controls['email']?.value,
+      emailBody: this.emailForm.controls['emailBody']?.value
+    })
       .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
         this.snackBar.open('Email sent!');
@@ -36,11 +39,6 @@ export class AppComponent implements OnDestroy {
         this.snackBar.open(`Error: ${error}`);
         console.log(error);
       })
-  }
-
-  onSubmit() {
-    console.log(this.emailForm.controls['email']?.value);
-    console.log(this.emailForm.controls['emailBody']?.value);
   }
 
   ngOnDestroy(): void {
