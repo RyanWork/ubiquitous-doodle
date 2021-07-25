@@ -28,7 +28,7 @@
         <mat-label>Send me something!</mat-label>
         <textarea matInput formControlName="emailBody"></textarea>
       </mat-form-field>
-      <button mat-raised-button class="submit" color="primary" type="submit" [disabled]="emailForm.status !== 'VALID'">Send</button>
+      <button mat-raised-button class="submit" color="primary" type="submit" [disabled]="(this.invalid$ | async) || (sending$ | async)">Send</button>
     </form>
     <mat-card-subtitle>Or email me@ryanha.dev</mat-card-subtitle>
   </mat-card>
