@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,7 @@ namespace WebsiteApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureRateLimiting(services);
             services.AddSingleton<IServiceAccountFactory, ServiceAccountFactory>();
             services.AddHttpClient();
             services.AddControllers();
@@ -50,7 +52,15 @@ namespace WebsiteApi
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        private void ConfigureRateLimiting(IServiceCollection services)
+        {
+            services.AddMemoryCache();
+            services.Configure<IpRateLimitOptions>(_configuration.GetSection("IpRateLimiting"));
+            services.Configure<IpRateLimitPolicies>(_configuration.GetSection("IpRateLimitPolicies"));
+            services.AddInMemoryRateLimiting();
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,6 +69,11 @@ namespace WebsiteApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebsiteApi v1"));
             }
+
+            var ipPolicyStore = app.ApplicationServices.GetRequiredService<IIpPolicyStore>();
+            ipPolicyStore.SeedAsync().Wait();
+
+            app.UseIpRateLimiting();
 
             app.UseHttpsRedirection();
 

@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { EmailService } from "./services/email.service";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {finalize, takeUntil, tap} from "rxjs/operators";
+import { BehaviorSubject, Observable, Subject} from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
