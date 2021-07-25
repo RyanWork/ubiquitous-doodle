@@ -6,6 +6,10 @@ namespace WebsiteApi.Common
 {
     public static class RegexExtensions
     {
+        private static readonly Regex CachedEmailMatchRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromMilliseconds(250));
+        
+        private static readonly Regex CachedNormalizeRegex = new Regex(@"(@)(.+)$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(200)); 
+        
         public static bool IsValidEmail(this string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -14,7 +18,7 @@ namespace WebsiteApi.Common
             try
             {
                 // Normalize the domain
-                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
+                email = CachedNormalizeRegex.Replace(email, DomainMapper);
 
                 // Examines the domain part of the email and normalizes it.
                 string DomainMapper(Match match)
@@ -39,7 +43,7 @@ namespace WebsiteApi.Common
 
             try
             {
-                return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+                return CachedEmailMatchRegex.IsMatch(email);
             }
             catch (RegexMatchTimeoutException)
             {
