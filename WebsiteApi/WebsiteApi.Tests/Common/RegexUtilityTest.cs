@@ -2,7 +2,7 @@
 using WebsiteApi.Common;
 using Xunit;
 
-namespace WebsiteApi.Tests.Helpers
+namespace WebsiteApi.Tests.Common
 {
     public class RegexUtilityTest
     {

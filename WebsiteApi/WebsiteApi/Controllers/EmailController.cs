@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
-using Google.Apis.Auth.OAuth2;
 using Google.Apis.Gmail.v1;
 using Google.Apis.Gmail.v1.Data;
-using Google.Apis.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -51,10 +48,8 @@ namespace WebsiteApi.Controllers
             if (!ValidatePostedEmail(email))
                 return new BadRequestResult();
             
-            IClientService? clientService = await _serviceAccountFactory.CreateGmailServiceAsync(_appSettings.KeyFilePath, ApplicationName, _appSettings.ImpersonationUser, Scopes, cancellationToken);
-            if (clientService is not GmailService gmailService)
-                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
-
+            GmailService? gmailService = await _serviceAccountFactory.CreateGmailServiceAsync(_appSettings.KeyFilePath, ApplicationName, _appSettings.ImpersonationUser, Scopes, cancellationToken);
+            
             var mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_appSettings.ServiceAccountEmail);
             mailMessage.To.Add(_appSettings.DefaultSendAddress);

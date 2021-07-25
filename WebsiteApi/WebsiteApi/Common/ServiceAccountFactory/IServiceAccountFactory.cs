@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Google.Apis.Services;
+using Google.Apis.Gmail.v1;
 
 namespace WebsiteApi.Common.ServiceAccountFactory
 {
     public interface IServiceAccountFactory
     {
-        Task<IClientService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken);
+        Task<GmailService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken);
     }
 }

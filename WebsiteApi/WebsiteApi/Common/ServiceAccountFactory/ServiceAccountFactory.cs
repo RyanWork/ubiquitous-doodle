@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,13 +9,14 @@ using Google.Apis.Services;
 
 namespace WebsiteApi.Common.ServiceAccountFactory
 {
+    [ExcludeFromCodeCoverage]
     public class ServiceAccountFactory : IServiceAccountFactory
     {
         private readonly SemaphoreSlim _cacheLock = new(1, 1);
 
         private readonly IDictionary<string, GmailService> _gmailServiceCache = new Dictionary<string, GmailService>();
         
-        public async Task<IClientService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken)
+        public async Task<GmailService> CreateGmailServiceAsync(string keyFilePath, string applicationName, string impersonationUser, IEnumerable<string> scopes, CancellationToken cancellationToken)
         {
             await _cacheLock.WaitAsync(cancellationToken);
             try

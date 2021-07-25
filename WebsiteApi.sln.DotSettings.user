@@ -5,5 +5,7 @@
     &lt;TestId&gt;xUnit::739C3526-91C4-46C1-B8D8-126270CFE933::net5.0::WebsiteApi.Tests.Helpers.RegexUtilityTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::739C3526-91C4-46C1-B8D8-126270CFE933::net5.0::WebsiteApi.Tests.Controllers.EmailControllerTest.SendEmailAsync_ValidEmail_ShouldSendEmail&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::739C3526-91C4-46C1-B8D8-126270CFE933::net5.0::WebsiteApi.Tests.Controllers.EmailControllerTest.SendEmailAsync_BadGmailService_ReturnsInternalServerError&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::739C3526-91C4-46C1-B8D8-126270CFE933::net5.0::WebsiteApi.Tests.Controllers.EmailControllerTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::739C3526-91C4-46C1-B8D8-126270CFE933::net5.0::WebsiteApi.Tests.Common.RegexUtilityTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -1,17 +1,20 @@
 ﻿using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using FluentAssertions;
 using Google.Apis.Gmail.v1;
-using Google.Apis.Services;
+using Google.Apis.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
 using WebsiteApi.Common.ServiceAccountFactory;
 using WebsiteApi.Controllers;
 using WebsiteApi.Model;
+using WebsiteApi.Tests.Helpers.Fakes;
+using WebsiteApi.Tests.Helpers.Fakes.Gmail;
 using Xunit;
 
 namespace WebsiteApi.Tests.Controllers
@@ -43,11 +46,12 @@ namespace WebsiteApi.Tests.Controllers
         }
         
         [Fact]
-        public async Task SendEmailAsync_ValidEmail_ShouldSendEmail()
+        public async Task SendEmailAsync_ValidEmail_ShouldSendEmailAndReturnNoContent()
         {
             var fakeEmail = CreateValidEmail();
+            var fakeGmailService = CreateFakeGmailService();
             _mockServiceAccountFactory.Setup(x => x.CreateGmailServiceAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(_fixture.Create<GmailService>());
+                .ReturnsAsync(fakeGmailService);
             
             var result = await _sut.SendEmailAsync(fakeEmail, It.IsAny<CancellationToken>());
             
@@ -56,15 +60,13 @@ namespace WebsiteApi.Tests.Controllers
         }
 
         [Fact]
-        public async Task SendEmailAsync_BadGmailService_ReturnsInternalServerError()
+        public async Task SendEmailAsync_BadEmail_ReturnsBadRequest()
         {
-            var fakeEmail = CreateValidEmail();
-            _mockServiceAccountFactory.Setup(x => x.CreateGmailServiceAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string[]>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(value: null);
-            
-            var result = await _sut.SendEmailAsync(fakeEmail, It.IsAny<CancellationToken>());
+            Email? fakeEmail = null;
 
-            result.Should().BeEquivalentTo(new StatusCodeResult((int)HttpStatusCode.InternalServerError));
+            var result = await _sut.SendEmailAsync(fakeEmail!, It.IsAny<CancellationToken>());
+
+            result.Should().BeEquivalentTo(new BadRequestResult());
         }
 
         private Email CreateValidEmail() =>
@@ -72,5 +74,24 @@ namespace WebsiteApi.Tests.Controllers
                 .With(x => x.EmailAddress, "someInterestedPerson@test.com")
                 .With(x => x.EmailBody, "some interesting piece of information!")
                 .Create();
+
+        private GmailService CreateFakeGmailService()
+        {
+            Mock<FakeHttpMessageHandler> fakeHttpMessageHandler = _fixture.Build<Mock<FakeHttpMessageHandler>>()
+                .With(x => x.CallBase, true)
+                .Create();
+            fakeHttpMessageHandler.Setup(x => x.Send(It.IsAny<HttpRequestMessage>()))
+                .Returns(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("{\"success\": true,\"error-codes\": [\"\"]}")
+                });
+            
+            FakeClientService fakeClientService = _fixture.Build<FakeClientService>()
+                .With(x => x.HttpClient, new ConfigurableHttpClient(new ConfigurableMessageHandler(fakeHttpMessageHandler.Object)))
+                .Create();
+
+            return new FakeGmailService(fakeClientService);
+        }
     }
 }

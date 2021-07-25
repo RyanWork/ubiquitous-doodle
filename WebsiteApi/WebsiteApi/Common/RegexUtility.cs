@@ -6,9 +6,9 @@ namespace WebsiteApi.Common
 {
     public static class RegexExtensions
     {
-        private static readonly Regex CachedEmailMatchRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromMilliseconds(250));
+        private static readonly Regex CachedEmailMatchRegex = new(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromMilliseconds(250));
         
-        private static readonly Regex CachedNormalizeRegex = new Regex(@"(@)(.+)$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(200)); 
+        private static readonly Regex CachedNormalizeRegex = new(@"(@)(.+)$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(200)); 
         
         public static bool IsValidEmail(this string email)
         {
@@ -36,7 +36,7 @@ namespace WebsiteApi.Common
             {
                 return false;
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 return false;
             }

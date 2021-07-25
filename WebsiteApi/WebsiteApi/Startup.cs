@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using WebsiteApi.Model;
 
 namespace WebsiteApi
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         private readonly IConfiguration _configuration;
