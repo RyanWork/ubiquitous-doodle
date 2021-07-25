@@ -53,7 +53,7 @@ namespace WebsiteApi.Controllers
             var mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(_appSettings.ServiceAccountEmail);
             mailMessage.To.Add(_appSettings.DefaultSendAddress);
-            mailMessage.Subject = $"Profile: {email.EmailAddress}";
+            mailMessage.Subject = $"New submission from: {email.EmailAddress}";
             mailMessage.Body = email.EmailBody;
             mailMessage.IsBodyHtml = false;
 
