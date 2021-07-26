@@ -41,19 +41,16 @@ export class AppComponent implements OnDestroy {
       emailAddress: this.emailForm.controls['email']?.value,
       emailBody: this.emailForm.controls['emailBody']?.value
     })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.snackBar.open('Email sent!');
-      }, () => {
-        this.snackBar.open('Something went wrong, please email me@ryanha.dev');
-      })
-  }
-
-  formInvalid() {
-
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(() => {
+      this.snackBar.open('Email sent!');
+    }, () => {
+      this.snackBar.open('Something went wrong, please email me@ryanha.dev');
+    })
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 }

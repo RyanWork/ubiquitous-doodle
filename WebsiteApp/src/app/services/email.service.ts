@@ -1,8 +1,8 @@
 import { Injectable} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Email } from "../../model/Email";
-import {Observable, Subject} from "rxjs";
-import {tap} from "rxjs/operators";
+import { Observable, Subject } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
