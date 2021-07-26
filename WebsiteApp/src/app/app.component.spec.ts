@@ -3,14 +3,14 @@ import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import SpyObj = jasmine.SpyObj;
 import { EmailService } from "./services/email.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {Overlay} from "@angular/cdk/overlay";
-import {RouterTestingModule} from "@angular/router/testing";
-import {Observable, of, throwError} from "rxjs";
-import {delay} from "rxjs/operators";
-import {MatCard, MatCardModule, MatCardSubtitle} from "@angular/material/card";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {CircleLinkComponent} from "./circle-link/circle-link.component";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Overlay } from "@angular/cdk/overlay";
+import { RouterTestingModule } from "@angular/router/testing";
+import { of, throwError } from "rxjs";
+import { delay } from "rxjs/operators";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { CircleLinkComponent } from "./circle-link/circle-link.component";
 
 describe('AppComponent', () => {
   let emailServiceSpy: SpyObj<EmailService>;

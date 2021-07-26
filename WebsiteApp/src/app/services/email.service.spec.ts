@@ -1,5 +1,4 @@
-import {TestBed, tick} from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { EmailService } from './email.service';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { Email } from "../../model/Email";
