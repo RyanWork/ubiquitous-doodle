@@ -1,4 +1,4 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import SpyObj = jasmine.SpyObj;
