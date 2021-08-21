@@ -1,23 +1,22 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EmailService } from "./services/email.service";
 import { BehaviorSubject, Observable, Subject} from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 
   sending$: Observable<boolean>;
 
   private invalid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   invalid$ = this.invalid.asObservable();
-
-  title = 'Ryan Ha';
 
   emailForm = new FormGroup({
     email: new FormControl('', [
@@ -29,11 +28,15 @@ export class AppComponent implements OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>()
 
-  constructor(private emailService: EmailService, private snackBar: MatSnackBar) {
+  constructor(private emailService: EmailService, private snackBar: MatSnackBar, private titleService: Title) {
     this.sending$ = emailService.sending$;
     this.emailForm.statusChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe(result => this.invalid.next(result == 'INVALID'));
+  }
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Ryan Ha');
   }
 
   sendEmail() {
