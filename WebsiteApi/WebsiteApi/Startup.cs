@@ -76,7 +76,7 @@ namespace WebsiteApi
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
+            app.UseFileServer();
 
             app.UseRouting();
             
