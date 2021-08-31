@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteApi", "WebsiteApi\We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteApi.Tests", "WebsiteApi\WebsiteApi.Tests\WebsiteApi.Tests.csproj", "{739C3526-91C4-46C1-B8D8-126270CFE933}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{AF23B4C6-8083-4850-B0FD-FF965C5FBF68}"
+ProjectSection(SolutionItems) = preProject
+	Dockerfile = Dockerfile
+	.dockerignore = .dockerignore
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

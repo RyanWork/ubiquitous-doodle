@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 namespace WebsiteApi
 {
     [ExcludeFromCodeCoverage]
-    public static class Program
+    static class Program
     {
-        public static async Task Main(string[] args)
+        static async Task Main(string[] args)
         {
             using IWebHost webHost = CreateHostBuilder().Build();
             await webHost.StartAsync();
