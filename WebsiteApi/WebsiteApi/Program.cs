@@ -1,22 +1,23 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 
 namespace WebsiteApi
 {
     [ExcludeFromCodeCoverage]
     public static class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            using IWebHost webHost = CreateHostBuilder().Build();
+            await webHost.StartAsync();
+            await webHost.WaitForShutdownAsync();
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+        private static IWebHostBuilder CreateHostBuilder() =>
+            WebHost.CreateDefaultBuilder()
+                .UseKestrel()
+                .UseStartup<Startup>();
     }
 }
