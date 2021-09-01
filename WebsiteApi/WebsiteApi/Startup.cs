@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,12 +40,18 @@ namespace WebsiteApi
                 _configuration.GetSection("AppSettings")
                     .Bind(options));
 
+            var allowedOrigins = _configuration.GetSection("AllowedOrigins")
+                .AsEnumerable()
+                .Where(x => !string.IsNullOrEmpty(x.Value))
+                .Select(x => x.Value)
+                .ToArray();
+            
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200")
+                        builder.WithOrigins(allowedOrigins)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
