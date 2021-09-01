@@ -17,4 +17,12 @@ COPY --from=build-frontend /app/frontend/dist/ ./out/wwwroot
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
 COPY --from=build-backend /app/out .
+RUN useradd -u 1000 ryanha
+RUN chown -R ryanha .
+RUN chgrp -R ryanha .
+EXPOSE 80
+EXPOSE 443
 ENTRYPOINT ["dotnet", "WebsiteApi.dll"]
+
+# Change user to not run as root
+USER ryanha
