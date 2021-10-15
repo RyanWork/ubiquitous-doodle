@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-backend
 WORKDIR /app
 COPY ./WebsiteApi/WebsiteApi/ ./
 RUN dotnet restore
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o out --self-contained true --runtime linux-arm
 COPY --from=build-frontend /app/frontend/dist/ ./out/wwwroot
 
 # Build runtime image
