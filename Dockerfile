@@ -9,7 +9,7 @@ RUN ./node_modules/.bin/ng build
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm32v7 AS build-backend
 WORKDIR /app
 COPY ./WebsiteApi/WebsiteApi/ ./
-RUN dotnet restore
+RUN dotnet restore --runtime linux-arm
 RUN dotnet publish -c Release -o out --self-contained true --runtime linux-arm /p:PublishTrimmed=true
 COPY --from=build-frontend /app/frontend/dist/ ./out/wwwroot
 
