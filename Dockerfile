@@ -1,16 +1,16 @@
 # Build front end
-FROM node:16-alpine3.14 AS build-frontend
+FROM node:16-buster AS build-frontend
 WORKDIR /app/frontend
 COPY WebsiteApp/ .
 RUN npm install
 RUN ./node_modules/.bin/ng build
 
 # Build backend
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-backend
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-arm32v7 AS build-backend
 WORKDIR /app
 COPY ./WebsiteApi/WebsiteApi/ ./
 RUN dotnet restore
-RUN dotnet publish -c Release -o out --self-contained true --runtime linux-arm
+RUN dotnet publish -c Release -o out --self-contained true --runtime linux-arm /p:PublishTrimmed=true
 COPY --from=build-frontend /app/frontend/dist/ ./out/wwwroot
 
 # Build runtime image
