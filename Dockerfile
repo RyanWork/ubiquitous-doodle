@@ -2,7 +2,7 @@
 FROM node:16-buster AS build-frontend
 WORKDIR /app/frontend
 COPY WebsiteApp/ .
-RUN npm install
+RUN npm install --only=prod
 RUN ./node_modules/.bin/ng build
 
 # Build backend
