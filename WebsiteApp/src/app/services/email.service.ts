@@ -17,7 +17,7 @@ export class EmailService {
 
   public sendEmail(email: Email) {
     this.sending.next(true);
-    return this.httpClient.post("https://localhost:5001/api/v1/Email", email)
+    return this.httpClient.post("https://ryanha.dev/api/v1/Email", email)
       .pipe(finalize(() => this.sending.next(false)))
   }
 }
