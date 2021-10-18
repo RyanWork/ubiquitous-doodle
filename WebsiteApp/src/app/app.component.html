@@ -15,22 +15,31 @@
     </app-circle-link>
   </div>
 
-  <mat-card style="flex-direction: column">
-    <mat-card-header>
-      <mat-card-title>Interested?</mat-card-title>
-    </mat-card-header>
-    <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email Address</mat-label>
-        <input matInput type="text" placeholder="Email Address" formControlName="email" email/>
-      </mat-form-field>
-      <mat-form-field style="width:100%;" appearance="fill">
-        <mat-label>Send me something!</mat-label>
-        <textarea matInput formControlName="emailBody"></textarea>
-      </mat-form-field>
-      <button mat-raised-button class="submit" color="primary" type="submit" [disabled]="(this.invalid$ | async) || (sending$ | async)">Send</button>
-    </form>
-    <mat-card-subtitle>Or email me@ryanha.dev</mat-card-subtitle>
-  </mat-card>
+  <app-container title="About Me">
+    <p>testing2</p>
+  </app-container>
+  <app-container>
+    <p>testing3</p>
+  </app-container>
+
+  <app-container>
+    <mat-card style="flex-direction: column">
+      <mat-card-header>
+        <mat-card-title>Interested?</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="text" placeholder="Email Address" formControlName="email" email/>
+        </mat-form-field>
+        <mat-form-field style="width:100%;" appearance="fill">
+          <mat-label>Send me something!</mat-label>
+          <textarea matInput formControlName="emailBody"></textarea>
+        </mat-form-field>
+        <button mat-raised-button class="submit" color="primary" type="submit" [disabled]="(this.invalid$ | async) || (sending$ | async)">Send</button>
+      </form>
+      <mat-card-subtitle>Or email me@ryanha.dev</mat-card-subtitle>
+    </mat-card>
+  </app-container>
 </div>
 <router-outlet></router-outlet>
