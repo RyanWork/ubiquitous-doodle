@@ -19,14 +19,7 @@ namespace WebsiteApi
 
         private static IWebHostBuilder CreateHostBuilder() =>
             WebHost.CreateDefaultBuilder()
-                .UseKestrel(options => 
-		{
-			options.Listen(IPAddress.Any, 80);
-			options.Listen(IPAddress.Loopback, 443, listenOptions =>
-			{
-				listenOptions.UseHttps("/certs/certificate.pfx", "");
-			});
-		})
+                .UseKestrel()
                 .UseStartup<Startup>();
     }
 }

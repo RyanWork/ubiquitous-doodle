@@ -56,6 +56,11 @@ namespace WebsiteApi
                             .AllowAnyMethod();
                     });
             });
+
+   	    services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
         }
 
         private void ConfigureRateLimiting(IServiceCollection services)
