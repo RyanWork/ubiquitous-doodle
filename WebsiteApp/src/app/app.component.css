@@ -12,7 +12,7 @@
   align-items: stretch;
 }
 
-.card-container {
+.section-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
