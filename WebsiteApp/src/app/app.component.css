@@ -1,10 +1,7 @@
-.mat-typography {
-  font: 0 14px/20px Roboto, "Helvetica Neue", sans-serif;
-}
-
 .name-header {
-  font-size: 4.5em;
+  font-size: 5.0em;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  line-height: 1.1;
 }
 
 .content {
@@ -13,7 +10,6 @@
   padding: 16px;
   max-width: 1000px;
   flex-direction: column;
-  align-items: stretch;
 }
 
 .section-container {
@@ -21,6 +17,10 @@
   flex-wrap: wrap;
   justify-content: left;
   margin-bottom: 1.5em;
+}
+
+.separated-flex {
+  justify-content: space-between;
 }
 
 .submit {
