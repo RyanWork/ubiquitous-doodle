@@ -30,3 +30,8 @@ mat-form-field {
 :host /deep/ .mat-card-header-text {
   margin: 0;
 }
+
+.mat-card {
+  margin-bottom: 1em;
+  flex-direction: column;
+}
