@@ -1,6 +1,10 @@
+.mat-typography {
+  font: 0 14px/20px Roboto, "Helvetica Neue", sans-serif;
+}
+
 .name-header {
-  font-size: 5em;
-  font-family: "Lucida Bright", serif;
+  font-size: 4.5em;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .content {
@@ -16,7 +20,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
-  margin-top: 16px;
+  margin-bottom: 1.5em;
 }
 
 .submit {
@@ -32,6 +36,6 @@ mat-form-field {
 }
 
 .mat-card {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   flex-direction: column;
 }

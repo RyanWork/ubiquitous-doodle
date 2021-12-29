@@ -39,8 +39,7 @@ namespace WebsiteApi.Tests.Controllers
                 .Create();
             _fixture.Inject(Options.Create(fakeAppSettings));
 
-            _mockServiceAccountFactory = _fixture.Create<Mock<IServiceAccountFactory>>();
-            _fixture.Inject(_mockServiceAccountFactory.Object);
+            _mockServiceAccountFactory = _fixture.Freeze<Mock<IServiceAccountFactory>>();
 
             _sut = _fixture.Create<EmailController>();
         }
