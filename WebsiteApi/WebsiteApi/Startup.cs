@@ -57,10 +57,11 @@ namespace WebsiteApi
                     });
             });
 
-   	    // services.AddHttpsRedirection(options =>
-        //     {
-        //         options.HttpsPort = 443;
-        //     });
+            bool enableHttpsRedirection = bool.Parse(_configuration.GetSection("EnableHttpsRedirection").Value);
+            if (enableHttpsRedirection)
+            {
+                services.AddHttpsRedirection(options => options.HttpsPort = 443);
+            }
         }
 
         private void ConfigureRateLimiting(IServiceCollection services)
